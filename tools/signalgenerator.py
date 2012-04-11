@@ -16,6 +16,7 @@ class threephase:
 		self.phase		=	phase
 		self.stime		=	array([])			
 		self.__init_signal()
+		self.alma=''
 		
 	def signal(self, stime = 0):
 		if(stime):
