@@ -29,6 +29,10 @@ class inductionmotor:
 		"""load inertia"""
 		self.Jl	=	Jl
 		
+		
+	def statorreferenceframe(self, Ua, Ub, Uc):
+		
+		
 	
 		
 		
