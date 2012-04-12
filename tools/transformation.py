@@ -17,7 +17,7 @@ class transformation:
 		Clarke transformation
 		"""
 		_T_abc2ab0	=	2./3. * array([	[1., 	-0.5, 		-0.5		], 
-									[0,		sqrt(3)/2.,	-sqrt(3)/2.], 
+									[0,		-sqrt(3)/2.,	sqrt(3)/2.], 
 									[0.5,	0.5,		0.5		]
 							])
 		if(len(args) == 3):
@@ -34,8 +34,8 @@ class transformation:
 		Inverse Clarke transformation
 		"""
 		_T_ab02abc = array([ [1,		0,			1],
-							 [-0.5,		sqrt(3)/2.,	1],
-							 [-0.5,		-sqrt(3)/2.,1]
+							 [-0.5,		-sqrt(3)/2.,	1],
+							 [-0.5,		sqrt(3)/2.,1]
 							])
 		if(len(args) == 3):
 			return dot(_T_ab02abc, array([ [args[0]],[args[1]],[args[2]] ]))
@@ -49,8 +49,8 @@ class transformation:
 		"""
 		The Park transformation( from alpha-beta to d-q coordinates ):
 		"""		
-		_T_ab2dq = array([[cos(ohmega),		sin(ohmega)],
-				[-sin(ohmega),		cos(ohmega)]
+		_T_ab2dq = array([[cos(ohmega),		-sin(ohmega)],
+						[sin(ohmega),		cos(ohmega)]
 				])
 		if(len(args) == 2):
 			return dot(_T_ab2dq, array([ [args[0]],[args[1]]]))
@@ -64,13 +64,13 @@ class transformation:
 		"""
 		The Inverse Park transformation ( from d-q to alpha-beta )
 		"""
-		_T_ab02ab0 = array([[cos(ohmega),		-sin(ohmega)],
-					[sin(ohmega),		cos(ohmega)]
-					])
+		_T_dq2ab = array([[cos(ohmega),		sin(ohmega)],
+						[-sin(ohmega),		cos(ohmega)]
+						]);
 		if(len(args) == 2):
-			return dot(_T_ab02ab0, array([ [args[0]],[args[1]] ]))
+			return dot(_T_dq2ab, array([ [args[0]],[args[1]] ]))
 		elif(len(args) == 1):
-			return dot(_T_ab02ab0, args[0])
+			return dot(_T_dq2ab, args[0])
 		else:
 			raise InputArgumentError('The argument have to be the tree current component or' \
 			' an array with the tree current component!')
@@ -90,8 +90,8 @@ class transformation:
 		The ohmega(rad/s) is the rotation speed of the rotating frame. 		
 		"""
 		_T_abc2dq0		=	2./3. * array([	[cos(ohmega), 	cos(ohmega - 2.*pi / 3.), 	cos(ohmega + 2.*pi / 3.)],
-								[sin(ohmega), 	sin(ohmega - 2.*pi / 3.), 	sin(ohmega + 2.*pi / 3.)],
-								[1./2.,			1./2.,			1./2.]])
+											[sin(ohmega), 	sin(ohmega - 2.*pi / 3.), 	sin(ohmega + 2.*pi / 3.)],
+											[1./2.,			1./2.,			1./2.]])
 		
 		if(len(args) == 3):
 			return dot(_T_abc2dq0, array([ [args[0]],[args[1]],[args[2]] ]))
