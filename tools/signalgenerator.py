@@ -17,10 +17,10 @@ class threephase:
 	Ub	=	Umax * sin( 2 * pi * F * t - 2/3 * pi ) + bias
 	Uc	=	Umax * sin( 2 * pi * F * t - 4/3 * pi ) + bias
 	"""
-	def __init__(self, amp = 220, freq = 50, samplingT = 0.01, mtime = 0.5, bias = 0, phase = 0):
+	def __init__(self, amp = 220, freq = 50, Ts = 0.01, mtime = 0.5, bias = 0, phase = 0):
 		self.amp	 	= 	amp
 		self.freq		=	freq 
-		self.samplingT	=	samplingT
+		self.Ts			=	Ts
 		self.mtime		=	mtime
 		self.bias		=	bias
 		self.phase		=	phase
@@ -33,7 +33,7 @@ class threephase:
 		return array([ 	self.phasea, self.phaseb, self.phasec ])
 		
 	def __init_signal(self, stime = ''):
-		sinw	=	sinvawe(self.amp, self.freq, self.samplingT, self.mtime, self.bias, self.phase)
+		sinw	=	sinvawe(self.amp, self.freq, self.Ts, self.mtime, self.bias, self.phase)
 		if(stime == ''):
 			sinw.stime	=	stime;
 					
@@ -48,14 +48,14 @@ class squarewave:
 	x(t) = amp * sign( sin( 2 * pi * F * t + phase ) + bias )
 	where 2*pi*f is the angular frequency
 	"""
-	def __init__(self, amp = 220, freq = 50, samplingT = 0.01, mtime = 0.5, bias = 0, phase = 0):		
+	def __init__(self, amp = 220, freq = 50, Ts = 0.01, mtime = 0.5, bias = 0, phase = 0):		
 		self.amp	 	= 	amp
 		self.freq		=	freq 
-		self.samplingT	=	samplingT
+		self.Ts			=	Ts
 		self.mtime		=	mtime
 		self.bias		=	bias
 		self.phase		=	phase
-		self.stime		=	arange(0, self.mtime , self.samplingT)		
+		self.stime		=	arange(0, self.mtime , self.Ts)		
 		
 	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = ''):		
 		from numpy import sign		
@@ -78,15 +78,15 @@ class trianglewave:
 	Generating a triangle vawe.
 	x(t)= amp * 8 / pi^2 *sum(( -1 )^i * (sin((2 * i + 1) * 2 * pi * F * t + phase) + bias) / ( 2 * i + 1 )^2 )
 	"""
-	def __init__(self, amp = 220, freq = 50, samplingT = 0.01, mtime = 5, bias = 0, phase = 0, harmonic = 50):
+	def __init__(self, amp = 220, freq = 50, Ts = 0.01, mtime = 5, bias = 0, phase = 0, harmonic = 50):
 		self.amp	 	= 	amp
 		self.freq		=	freq 
-		self.samplingT	=	samplingT
+		self.Ts			=	Ts
 		self.mtime		=	mtime
 		self.bias		=	bias
 		self.phase		=	phase
 		self.harmonic	=	harmonic
-		self.stime 		= 	arange(0, self.mtime, self.samplingT)			
+		self.stime 		= 	arange(0, self.mtime, self.Ts)			
 		
 	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = '', harmonic = ''):				
 		if stime == '':
@@ -115,15 +115,15 @@ class sawtoothwave:
 	x(t)= amp * 2 / pi *sum(( -1 )^i * (sin( 2 * i * pi * F * t + phase) + bias) / i )
 	where 2*pi*f is the angular frequency
 	"""
-	def __init__(self, amp = 220, freq = 50, samplingT = 0.01, mtime = 5, bias = 0, phase = 0, harmonic = 50):
+	def __init__(self, amp = 220, freq = 50, Ts = 0.01, mtime = 5, bias = 0, phase = 0, harmonic = 50):
 		self.amp	 	= 	amp
 		self.freq		=	freq 
-		self.samplingT	=	samplingT
+		self.Ts			=	Ts
 		self.mtime		=	mtime
 		self.bias		=	bias
 		self.phase		=	phase
 		self.harmonic	=	harmonic
-		self.stime 		= 	arange(0, self.mtime, self.samplingT)			
+		self.stime 		= 	arange(0, self.mtime, self.Ts)			
 		
 	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = '', harmonic = ''):				
 		if stime == '':
@@ -151,14 +151,14 @@ class sinwave:
 	Generating a sinus vawe.
 	x(t)= amp * sin(2 * pi * F * t + phase) + bias
 	"""
-	def __init__(self, amp = 220, freq = 50, samplingT = 0.01, mtime = 0.01, bias = 0, phase = 0):
+	def __init__(self, amp = 220, freq = 50, Ts = 0.01, mtime = 0.01, bias = 0, phase = 0):
 		self.amp	 	= 	amp
 		self.freq		=	freq 
-		self.samplingT	=	samplingT
+		self.Ts			=	Ts
 		self.mtime		=	mtime
 		self.bias		=	bias
 		self.phase		=	phase
-		self.stime 		= 	arange(0, self.mtime, self.samplingT)			
+		self.stime 		= 	arange(0, self.mtime, self.Ts)			
 		
 	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = ''):
 		if stime == '':
@@ -179,14 +179,14 @@ class coswave:
 	Generating a cosinus vawe
 	x(t) = amp * cos(2 * pi * F * t + phase) + bias
 	"""
-	def __init__(self, amp = 220, freq = 50, samplingT = 0.01, mtime = 5, bias = 0, phase = 0):
+	def __init__(self, amp = 220, freq = 50, Ts = 0.01, mtime = 5, bias = 0, phase = 0):
 		self.amp	 	= 	amp
 		self.freq		=	freq 
-		self.samplingT	=	samplingT
+		self.Ts			=	Ts
 		self.mtime		=	mtime
 		self.bias		=	bias
 		self.phase		=	phase
-		self.stime 		= 	arange(0, self.mtime, self.samplingT)		
+		self.stime 		= 	arange(0, self.mtime, self.Ts)		
 		
 	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = ''):
 		if stime == '':

@@ -1,6 +1,12 @@
-"""
-http://en.wikipedia.org/wiki/PID_controller
-"""
+__author__ = "Robert Unguran"
+__copyright__ = "Copyright 2012"
+__credits__ = ["Robert Unguran"]
+__license__ = "GPL"
+__version__ = "1.0.0"
+__maintainer__ = "Robert Unguran"
+__email__ = "unguranr@gmail.com"
+__status__ = "Under Development"
+
 import time, sys
 class PID:
 	def __init__(self, P=2.0, I=1.0, D=1.0, I_max=500, I_min=-500):
@@ -52,7 +58,7 @@ class PID:
 	
 	def __gettime(self):
 		if sys.platform == "win32":
-		# On Windows, the best timer is time.clock()
+			# On Windows, the best timer is time.clock()
 			default_timer = time.clock
 		else:
 			# On most other platforms the best timer is time.time()
