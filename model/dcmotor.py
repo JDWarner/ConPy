@@ -31,6 +31,9 @@ class dcmotor:
 	The model is inaccurate
 	"""
 	def __init__(self, J = 3.2284e-6, b = 3.5077e-6, K_e = 0.0274, K_m = 0.0274, La = 2.75e-6, Ra = 4, Fc = 3.2284e-6 ):				
+		self.num = K_e
+		self.den =	array([(J*La), ((J*Ra)+(La*b)), ((b*Ra)+power(K_e,2))]);
+		
 		self.A = array([						
 						[-b/J, K_m/J],
 						[-K_e/La, -Ra/La]
@@ -39,8 +42,8 @@ class dcmotor:
 						[0],
 						[1/La]
 						])
-		self.C = eye(2)
-		self.D = array([0])
+		self.C = array([[1, 0], [0, 0]])
+		self.D = array([[0], [0]])
 		
 		self.const = array([
 							[0],
