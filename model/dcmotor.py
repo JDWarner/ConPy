@@ -25,7 +25,7 @@ J is the combined moment of inertia of the load and the rotor;
 B is the equivalent viscous friction constant of the load and the motor, 
 and K is the design constant depending on the construction of the motor
 """
-from numpy import array, eye, sign, power
+from scipy import array, eye, sign, power
 class dcmotor:
 	"""
 	The model is inaccurate
@@ -42,20 +42,14 @@ class dcmotor:
 						[0],
 						[1/La]
 						])
-		self.C = array([[1, 0], [0, 0]])
-		self.D = array([[0], [0]])
+		self.C = array([[1, 0]])
+		self.D = array([[0]])
 		
 		self.const = array([
 							[0],
 							[-Fc/J]
 							])
-		self.__dx_dt	=	array([[0], [0]])
-		
-	
-	"""def update(self, u):
-		self.__dx_dt	=	dot(self.A * self.__dx_dt) + dot(self.B * u) + self.const * sign(self.__dx_dt[1])
-		
-		return dot(self.C, self.__dx_dt)"""
+		self.__dx_dt	=	array([[0], [0]])	
 		
 		
 		
