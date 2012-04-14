@@ -9,10 +9,19 @@ __status__ = "Under Development"
 
 import time, sys
 class PID:
-	def __init__(self, P=2.0, I=1.0, D=1.0, I_max=500, I_min=-500):
+	def __init__(self, P=2.0, I=10.0, D=0.001, I_max=500, I_min=-500, U_max=500, U_min=-500):
 		"""
-		Discrete implementation of the PID controller
-		If you want a P or PI controller just set the I,D to 0
+		@summary: Initializing the PID controller parameters
+		Discrete implementation of the PID controller. If you want a P or PI controller 
+		just set the I,D to 0
+		
+		@param P:
+		@param I:
+		@param D:
+		@param I_max:
+		@param I_min:
+		
+		@return: 
 		"""
 		self.Kp	=	P
 		self.Ki	=	I
@@ -21,6 +30,9 @@ class PID:
 		self.I_max	=	I_max
 		self.I_min	=	I_min
 		
+		self.U_max	=	U_max
+		self.U_min	=	U_min
+		
 		self.__error		=	0.0
 		
 		self.__integral 	= 0
@@ -28,12 +40,23 @@ class PID:
 		
 		self.__dt = 0;
 		
-	def run(self, error):	
+	def run(self, error, Ts = None):
+		"""
+		@summary: Updating the PID controller parameters
+		
+		@param error: The error between the predefined value and the measured value
+		@param Ts: Sampling time.
+		
+		@return: The control signal  
+		"""	
 		#The sampling time
 		if not self.__dt:
 			self.__dt = self.__gettime();
-			
-		dt = self.__gettime() - self.__dt
+		
+		if(Ts is None):
+			dt = self.__gettime() - self.__dt
+		else:
+			dt = Ts
 		#Storing the time in seconds
 		self.__dt = self.__gettime()
 		
@@ -53,10 +76,22 @@ class PID:
 		self.__error 		= 	error
 		
 		#Sum
-		return self.Kp * error +  self.__integral + self.__derivative
+		U =  self.Kp * error +  self.__integral + self.__derivative
 		
+		#Signal limitation
+		if(U > self.U_max):
+			U = self.U_max
+		if(U < self.U_min):
+			U = self.U_min
+			
+		return U
 	
 	def __gettime(self):
+		"""
+		@summary : On the Windows OS and the Linux OS has a different function to
+		get the precious time, this function will handle this and according the OS returns the
+		precious time.   
+		"""
 		if sys.platform == "win32":
 			# On Windows, the best timer is time.clock()
 			default_timer = time.clock

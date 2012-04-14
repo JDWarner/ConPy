@@ -8,7 +8,10 @@ __email__ = "unguranr@gmail.com"
 __status__ = "Under Development"
 
 from model.dcmotor import *
-from tools.tools import c2d
+#from tools.tools import c2d
+from controller.PID import PID
+from tools.signalgenerator import sinwave
+
 
 from numpy import *
 from scipy import *
@@ -17,32 +20,66 @@ import pylab, random
 import time
 
 
+"""
+@summary: This is a simple example. Testing the DC motor model response 
+			and a simple PID controller
+
+"""
 if __name__ == "__main__":
 	dc2 	= dcmotor()
-	mtime  =  arange(0, 5, 0.001)
+	Ts = 0.001
 	
-	yo = array([[0, 0]])
-	for i in range(len(mtime)-1):
-		u = array([1])		
-		yo = insert(yo, len(yo), asarray(dc2.dlsim(u)), 0);
+	mtime  =  arange(0, 0.1, Ts)
+	
+	yo = zeros((len(mtime), 2))
+	(A,B,C,D)= dc2.dss(Ts)
+	
+	for i in range(len(mtime)):
+		u = array([1.])		
+		yo[i,:] = dc2.dlsim(u, Ts= Ts);
 		
-	pylab.plot(mtime,yo[:,0])
+		
+	pylab.plot(yo[:,0])	
+	
+	#Clearing the previous position
+	dc2.x0	=	None;
+	#Creating and initializing the PID controller
+	pid	=	PID(P=0.25, I=10, D=0.0001)
+	
+	pw	=	ones(100) 
+	y_out =  zeros((len(pw), 1))
+	sw = 0;
+	for i in range(len(pw)):
+		error =  pw[i] - sw;
+		u = pid.run(error, Ts = Ts)
+		
+		sw = dc2.dlsim(u);
+		y_out[i,:] = sw
+	
+	pylab.figure(2)
+	pylab.plot(pw)
+	pylab.plot(y_out[:,0])
+	
+	
+	#Clearing the previous states
+	dc2.x0	=	None;	
+	
+	sinW = sinwave(Ts = Ts, mtime=1, freq =5)
+	pw = sinW.signal()	 
+	y_out =  zeros((len(pw), 1))
+	sw = 0;
+	for i in range(len(pw)):
+		error =  pw[i] - sw;
+		u = pid.run(error, Ts = Ts)
+		
+		sw = dc2.dlsim(u);
+		y_out[i,:] = sw
+		
+	
+	pylab.figure(3)
+	pylab.plot(pw)
+	pylab.plot(y_out[:,0])
 	pylab.show()
 	
-	
-	#dc = c2d((dc.A,dc.B,dc.C, dc.D), 0.001)	
-	
-	#(A,B,C,D) = tf2ss(dc.num, dc.den)
-	#print tf2ss(dc.num, dc.den)
-	#print ss2tf(A,B,C,D)
-	#(t,x)= dstep((dc.A, dc.B, dc.C, dc.D, 0.001))
-	#(t,y)= dstep((dc.A, dc.B, dc.C, dc.D, 0.001))
-	##pylab.plot(t,y[0])
-	#pylab.show()
-	"""(t,x) = step(ss2tf(A,B,C,D))
-	
-	pylab.plot(t,x)
-	pylab.show()
-	"""
 	
 
