@@ -27,14 +27,14 @@ class threephase:
 		self.stime		=	array([])			
 		self.__init_signal()
 		
-	def signal(self, stime = ''):
-		if(stime == ''):
+	def signal(self, stime = None):
+		if(stime == None):
 			self.__init_signal(stime)		
 		return array([ 	self.phasea, self.phaseb, self.phasec ])
 		
-	def __init_signal(self, stime = ''):
+	def __init_signal(self, stime = None):
 		sinw	=	sinvawe(self.amp, self.freq, self.Ts, self.mtime, self.bias, self.phase)
-		if(stime == ''):
+		if(stime == None):
 			sinw.stime	=	stime;
 					
 		self.stime	=	sinw.stime;		
@@ -57,17 +57,17 @@ class squarewave:
 		self.phase		=	phase
 		self.stime		=	arange(0, self.mtime , self.Ts)		
 		
-	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = ''):		
+	def signal(self, stime = None, phase = None, freq = None, bias = None, amp = None):		
 		from numpy import sign		
-		if stime == '':
+		if stime == None:
 			stime 	= 	self.stime
-		if phase == '':
+		if phase == None:
 			phase 	= 	self.phase;
-		if freq == '':
+		if freq == None:
 			freq 	= 	self.freq;
-		if bias == '':
+		if bias == None:
 			bias 	= 	self.bias;
-		if amp == '':
+		if amp == None:
 			amp = self.amp;			
 		x 	=	2 * pi * freq * stime 
 		return amp * sign( sin( x + phase ) ) + bias;
@@ -88,18 +88,18 @@ class trianglewave:
 		self.harmonic	=	harmonic
 		self.stime 		= 	arange(0, self.mtime, self.Ts)			
 		
-	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = '', harmonic = ''):				
-		if stime == '':
+	def signal(self, stime = None, phase = None, freq = None, bias = None, amp = None, harmonic = None):				
+		if stime == None:
 			stime 	= 	self.stime
-		if phase == '':
+		if phase == None:
 			phase 	= 	self.phase;
-		if freq == '':
+		if freq == None:
 			freq 	= 	self.freq;
-		if bias == '': 
+		if bias == None: 
 			bias 	= 	self.bias;
-		if amp == '':
+		if amp == None:
 			amp 	= 	self.amp;	
-		if harmonic == '':
+		if harmonic == None:
 			harmonic= 	self.harmonic;
 					
 		x 	=	2 * pi * freq * stime 
@@ -125,18 +125,18 @@ class sawtoothwave:
 		self.harmonic	=	harmonic
 		self.stime 		= 	arange(0, self.mtime, self.Ts)			
 		
-	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = '', harmonic = ''):				
-		if stime == '':
+	def signal(self, stime = None, phase = None, freq = None, bias = None, amp = None, harmonic = None):				
+		if stime == None:
 			stime 	= 	self.stime
-		if phase == '':
+		if phase == None:
 			phase 	= 	self.phase;
-		if freq == '':
+		if freq == None:
 			freq 	= 	self.freq;
-		if bias == '':
+		if bias == None:
 			bias 	= 	self.bias;
-		if amp == '':
+		if amp == None:
 			amp 	= 	self.amp;	
-		if harmonic == '':
+		if harmonic == None:
 			harmonic= 	self.harmonic;
 					
 		x 	=	2 * pi * freq * stime 
@@ -160,16 +160,16 @@ class sinwave:
 		self.phase		=	phase
 		self.stime 		= 	arange(0, self.mtime, self.Ts)			
 		
-	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = ''):
-		if stime == '':
+	def signal(self, stime = None, phase = None, freq = None, bias = None, amp = None):
+		if stime == None:
 			stime 	= 	self.stime
-		if phase == '':
+		if phase == None:
 			phase 	= 	self.phase;
-		if freq == '':
+		if freq == None:
 			freq 	= 	self.freq;
-		if bias == '':
+		if bias == None:
 			bias 	= 	self.bias;
-		if amp == '':
+		if amp == None:
 			amp 	= 	self.amp;			
 		x 	=	2 * pi * freq * stime 
 		return amp * sin(x + phase) + bias;
@@ -188,16 +188,16 @@ class coswave:
 		self.phase		=	phase
 		self.stime 		= 	arange(0, self.mtime, self.Ts)		
 		
-	def signal(self, stime = '', phase = '', freq = '', bias = '', amp = ''):
-		if stime == '':
+	def signal(self, stime = None, phase = None, freq = None, bias = None, amp = None):
+		if stime == None:
 			stime 	= 	self.stime
-		if phase == '':
+		if phase == None:
 			phase 	= 	self.phase;
-		if freq == '':
+		if freq == None:
 			freq 	= 	self.freq;
-		if bias == '':
+		if bias == None:
 			bias 	= 	self.bias;
-		if amp == '':
+		if amp == None:
 			amp 	= 	self.amp;					
 		
 		x 	=	2 * pi * freq * stime 

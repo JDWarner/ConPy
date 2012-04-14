@@ -8,9 +8,8 @@ __email__ = "unguranr@gmail.com"
 __status__ = "Under Development"
 
 from model.dcmotor import *
-#from tools.tools import c2d
+from tools.tools import c2d
 
-from control.matlab import * 
 from numpy import *
 from scipy import *
 from scipy.signal import *
@@ -19,22 +18,31 @@ import time
 
 
 if __name__ == "__main__":
-	dc 	= dcmotor()
-	mtime  =  arange(0, 2, 0.001)
-	u = ones(len(mtime));
-	print dc.A
-	print dc.B
-	print dc.C
-	print dc.D
+	dc2 	= dcmotor()
+	mtime  =  arange(0, 5, 0.001)
 	
-	print tf2ss(dc.num, dc.den)
-	(t,x)= step((dc.A, dc.B, dc.C, dc.D))
-	pylab.plot(t,x)
-	pylab.figure(2)
-	(t,x) = step(tf2ss(dc.num, dc.den))
+	yo = array([[0, 0]])
+	for i in range(len(mtime)-1):
+		u = array([1])		
+		yo = insert(yo, len(yo), asarray(dc2.dlsim(u)), 0);
+		
+	pylab.plot(mtime,yo[:,0])
+	pylab.show()
+	
+	
+	#dc = c2d((dc.A,dc.B,dc.C, dc.D), 0.001)	
+	
+	#(A,B,C,D) = tf2ss(dc.num, dc.den)
+	#print tf2ss(dc.num, dc.den)
+	#print ss2tf(A,B,C,D)
+	#(t,x)= dstep((dc.A, dc.B, dc.C, dc.D, 0.001))
+	#(t,y)= dstep((dc.A, dc.B, dc.C, dc.D, 0.001))
+	##pylab.plot(t,y[0])
+	#pylab.show()
+	"""(t,x) = step(ss2tf(A,B,C,D))
 	
 	pylab.plot(t,x)
 	pylab.show()
-	
+	"""
 	
 
