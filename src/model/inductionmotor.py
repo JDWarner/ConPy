@@ -31,7 +31,7 @@ class inductionmotor:
 		
 		
 	def statorreferenceframe(self, Ua, Ub, Uc):
-		
+		pass
 		
 	
 		

@@ -36,11 +36,11 @@ class dcmotor:
 		@summary: Initializing the DC motor's parameters		
 		
 		@param J: Motor and load Inertia
-		@param b: Friction
+		@param b: Viscous damping coefficient
 		@param K_e: Speed constant  
 		@param K_m: Torque constant
-		@param La: Inductance
-		@param Ra: Motor resistance   
+		@param La: Motor armature coil inductance
+		@param Ra: Motor armature coil resistance   
 		@param Fc: Coulomb friction   
 		
 		@return: None
@@ -60,21 +60,28 @@ class dcmotor:
 		@summary: Calculate the DC motro model
 		
 		@return: Return a tuple with the A,B,C,D state-space model matrix
+		
+		x0 - dw/dt
+		x1 - dw/dt
+		x3 - do/dt
 		"""
 		self.A = array([						
-						[-self.b/self.J, self.K_m/self.J],
-						[-self.K_e/self.La, -self.Ra/self.La]
+						[-self.b/self.J, self.K_m/self.J, 		0.],
+						[-self.K_e/self.La, -self.Ra/self.La,  	0.],
+						[0., 				0.,  				1]
 						])
 		self.B = array([						
 						[0.],
-						[1./self.La]
+						[1./self.La],
+						[0.]
 						])
-		self.C = array([[1., 0.]])
+		self.C = array([[1., 0., 0.]])
 		self.D = array([[0.]])
 		
 		self.const = array([
-							[0],
-							[-self.Fc/self.J]
+							[0.],
+							[-self.Fc/self.J],
+							[0.]
 							])
 							
 		return (self.A, self.B, self.C, self.D)
@@ -106,7 +113,7 @@ class dcmotor:
 			if not x0 is None:
 				self.x0	=	x0
 			else:
-				self.x0	=	zeros((2,1))
+				self.x0	=	zeros((3,1))
 			(self.Ad, self.Bd, self.Cd, self.Dd)	=	self.dss(Ts)
 			
 			

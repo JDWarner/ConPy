@@ -31,7 +31,7 @@ if __name__ == "__main__":
 	
 	mtime  =  arange(0, 0.1, Ts)
 	
-	yo = zeros((len(mtime), 2))
+	yo = zeros((len(mtime), 3))
 	(A,B,C,D)= dc2.dss(Ts)
 	
 	for i in range(len(mtime)):
@@ -64,9 +64,10 @@ if __name__ == "__main__":
 	#Clearing the previous states
 	dc2.x0	=	None;	
 	
-	sinW = sinwave(Ts = Ts, mtime=1, freq =5)
+	sinW = sinwave(Ts = Ts, mtime=1, freq =5, amp = 6000)
 	pw = sinW.signal()	 
 	y_out =  zeros((len(pw), 1))
+	u_out =  zeros((len(pw), 1))
 	sw = 0;
 	for i in range(len(pw)):
 		error =  pw[i] - sw;
@@ -74,11 +75,14 @@ if __name__ == "__main__":
 		
 		sw = dc2.dlsim(u);
 		y_out[i,:] = sw
+		u_out[i,:] = u
 		
 	
 	pylab.figure(3)
 	pylab.plot(pw)
 	pylab.plot(y_out[:,0])
+	pylab.figure(4)
+	pylab.plot(u_out[:,0])
 	pylab.show()
 	
 	
