@@ -9,23 +9,25 @@ __status__ = "Under Development"
 
 import time, sys
 class PID:
-	def __init__(self, P=2.0, I=10.0, D=0.001, I_max=500, I_min=-500, U_max=500, U_min=-500):
+	def __init__(self, KP=2.0, KI=10.0, KD=0.001, I_max=500, I_min=-500, U_max=500, U_min=-500):
 		"""
 		@summary: Initializing the PID controller parameters
 		Discrete implementation of the PID controller. If you want a P or PI controller 
 		just set the I,D to 0
 		
-		@param P:
-		@param I:
-		@param D:
-		@param I_max:
-		@param I_min:
+		@param KP: Proportional gain
+		@param KI: Integral gain
+		@param KD: Derivative gain
+		@param U_max: The maximum output signal 
+		@param U_min: The minimum output signal
+		@param I_max: The maximum integral value 
+		@param I_min: The minimal integral value
 		
-		@return: 
+		@return: The control signal 
 		"""
-		self.Kp	=	P
-		self.Ki	=	I
-		self.Kd	=	D
+		self.Kp	=	KP
+		self.Ki	=	KI
+		self.Kd	=	KD
 		
 		self.I_max	=	I_max
 		self.I_min	=	I_min
