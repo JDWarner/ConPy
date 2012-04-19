@@ -21,68 +21,67 @@ import time
 
 
 """
-@summary: This is a simple example. Testing the DC motor model response 
+@summary: 	This is a simple example. Testing the DC motor model response 
 			and a simple PID controller
-
 """
 if __name__ == "__main__":
-	dc2 	= dcmotor()
+	dc2 	 = dcmotor()
 	Ts = 0.001
 	
-	mtime  =  arange(0, 0.1, Ts)
+	mtime = arange( 0, 0.1, Ts )
 	
-	yo = zeros((len(mtime), 3))
-	(A,B,C,D)= dc2.dss(Ts)
+	yo = zeros( ( len( mtime ), 3 ) )
+	( A, B, C, D ) = dc2.dss( Ts )
 	
-	for i in range(len(mtime)):
-		u = array([1.])		
-		yo[i,:] = dc2.dlsim(u, Ts= Ts);
+	for i in range( len( mtime ) ):
+		u = array( [1.] )		
+		yo[i, :] = dc2.dlsim( u, Ts = Ts );
 		
 		
-	pylab.plot(yo[:,0])	
+	pylab.plot( yo[:, 0] )	
 	
 	#Clearing the previous position
-	dc2.x0	=	None;
+	dc2.x0	 = 	None;
 	#Creating and initializing the PID controller
-	pid	=	PID(P=0.25, I=10, D=0.0001)
+	pid	 = 	PID( P = 0.25, I = 10, D = 0.0001 )
 	
-	pw	=	ones(100) 
-	y_out =  zeros((len(pw), 1))
+	pw	 = 	ones( 100 ) 
+	y_out = zeros( ( len( pw ), 1 ) )
 	sw = 0;
-	for i in range(len(pw)):
-		error =  pw[i] - sw;
-		u = pid.run(error, Ts = Ts)
+	for i in range( len( pw ) ):
+		error = pw[i] - sw;
+		u = pid.run( error, Ts = Ts )
 		
-		sw = dc2.dlsim(u);
-		y_out[i,:] = sw
+		sw = dc2.dlsim( u );
+		y_out[i, :] = sw
 	
-	pylab.figure(2)
-	pylab.plot(pw)
-	pylab.plot(y_out[:,0])
+	pylab.figure( 2 )
+	pylab.plot( pw )
+	pylab.plot( y_out[:, 0] )
 	
 	
 	#Clearing the previous states
-	dc2.x0	=	None;	
+	dc2.x0	 = 	None;	
 	
-	sinW = sinwave(Ts = Ts, mtime=1, freq =5, amp = 6000)
+	sinW = sinwave( Ts = Ts, mtime = 1, freq = 5, amp = 6000 )
 	pw = sinW.signal()	 
-	y_out =  zeros((len(pw), 1))
-	u_out =  zeros((len(pw), 1))
+	y_out = zeros( ( len( pw ), 1 ) )
+	u_out = zeros( ( len( pw ), 1 ) )
 	sw = 0;
-	for i in range(len(pw)):
-		error =  pw[i] - sw;
-		u = pid.run(error, Ts = Ts)
+	for i in range( len( pw ) ):
+		error = pw[i] - sw;
+		u = pid.run( error, Ts = Ts )
 		
-		sw = dc2.dlsim(u);
-		y_out[i,:] = sw
-		u_out[i,:] = u
+		sw = dc2.dlsim( u );
+		y_out[i, :] = sw
+		u_out[i, :] = u
 		
 	
-	pylab.figure(3)
-	pylab.plot(pw)
-	pylab.plot(y_out[:,0])
-	pylab.figure(4)
-	pylab.plot(u_out[:,0])
+	pylab.figure( 3 )
+	pylab.plot( pw )
+	pylab.plot( y_out[:, 0] )
+	pylab.figure( 4 )
+	pylab.plot( u_out[:, 0] )
 	pylab.show()
 	
 	
