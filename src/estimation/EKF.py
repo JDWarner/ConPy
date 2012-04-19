@@ -14,7 +14,7 @@ class dEKF:
 	"""
 	@summary: 	Discrete extended Kalman Filter 
 	"""
-	def __init__( self, sys, x0, Q = None, R = None, PP = None ):
+	def __init__( self, x0 , Q = None, R = None, PP = None ):
 		self.n = x0.shape[0]
 		
 		#error covariance matrix
@@ -32,6 +32,7 @@ class dEKF:
 			self.R 	 = 	1e-4 * 	identity( self.n )
 		else:
 			self.R	 = 	R
+		
 		
 		self.xk = x0
 		

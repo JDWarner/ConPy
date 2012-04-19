@@ -43,7 +43,7 @@ if __name__ == "__main__":
 	#Clearing the previous position
 	dc2.x0	 = 	None;
 	#Creating and initializing the PID controller
-	pid	 = 	PID( P = 0.25, I = 10, D = 0.0001 )
+	pid	 = 	PID( KP = 0.25, KI = 10, KD = 0.0001 )
 	
 	pw	 = 	ones( 100 ) 
 	y_out = zeros( ( len( pw ), 1 ) )

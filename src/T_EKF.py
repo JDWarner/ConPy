@@ -12,10 +12,30 @@ from numpy import *
 from scipy import *
 from scipy.signal import *
 
-from estimation.EKF import *
+from model.dcmotor import dcmotor
+from estimation.EKF import dEKF
+import pylab
 """
 @summary:     A simple test of the  Extended Kalman Filter
 """
 
 if __name__ == "__main__":
-    pass
+    dc2      = dcmotor()
+    Ts = 0.001
+    ekf =   dEKF(x0 = zeros((3,1)))
+    
+    mtime = arange( 0, 0.1, Ts )
+    
+    yo = zeros( ( len( mtime ), 3 ) )
+    ( A, B, C, D ) = dc2.dss( Ts )
+    
+    
+    
+    for i in range( len( mtime ) ):
+        u = array( [1.] )        
+        yo[i, :] = dc2.dlsim( u, Ts = Ts );
+        #ekf.update( Zk, u, A, B, H, Gk )    
+        
+    pylab.plot( yo[:, 0] )    
+    pylab.show()
+    

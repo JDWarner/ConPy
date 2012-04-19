@@ -62,7 +62,7 @@ class dcmotor:
 		@return: Return a tuple with the A,B,C,D state-space model matrix
 		
 		x0 - dw/dt
-		x1 - dw/dt
+		x1 - di/dt
 		x3 - do/dt
 		"""
 		self.A = array([						
