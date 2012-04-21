@@ -117,11 +117,11 @@ class dcmotor:
 			(self.Ad, self.Bd, self.Cd, self.Dd)	=	self.dss(Ts)
 			
 			
-		xk_1 = dot(self.Ad, self.x0) + dot(self.Bd, u) #+ self.const*sign(self.x0[0])
+		xk_1 = dot(self.Ad, self.x0) + dot(self.Bd, u) #+ self.const*sign(self.x0[0])		
 		y_out = dot(self.Cd, self.x0) + dot(self.Dd, u)
 		self.x0	=	xk_1
-			
-		return y_out
+		
+		return (y_out, self.x0)
 			
 		
 			

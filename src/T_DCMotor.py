@@ -35,7 +35,7 @@ if __name__ == "__main__":
 	
 	for i in range( len( mtime ) ):
 		u = array( [1.] )		
-		yo[i, :] = dc2.dlsim( u, Ts = Ts );
+		yo[i, :] = dc2.dlsim( u, Ts = Ts )[0];
 		
 		
 	pylab.plot( yo[:, 0] )	
@@ -52,9 +52,9 @@ if __name__ == "__main__":
 		error = pw[i] - sw;
 		u = pid.run( error, Ts = Ts )
 		
-		sw = dc2.dlsim( u );
+		sw = dc2.dlsim( u )[0];
 		y_out[i, :] = sw
-	
+			
 	pylab.figure( 2 )
 	pylab.plot( pw )
 	pylab.plot( y_out[:, 0] )
@@ -72,7 +72,7 @@ if __name__ == "__main__":
 		error = pw[i] - sw;
 		u = pid.run( error, Ts = Ts )
 		
-		sw = dc2.dlsim( u );
+		sw = dc2.dlsim( u )[0];
 		y_out[i, :] = sw
 		u_out[i, :] = u
 		
