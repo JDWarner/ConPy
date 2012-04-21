@@ -77,7 +77,7 @@ class dKF:
 			self.Q	 = 	Q
 		#noise covariance matrice	
 		if R == None:
-			self.R 	 = 	1e-5 * 	eye( self.n )
+			self.R 	 = 	1e2 * 	eye( self.n )
 		else:
 			self.R	 = 	R
 		

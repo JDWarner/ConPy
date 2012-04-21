@@ -23,10 +23,10 @@ import pylab
 
 if __name__ == "__main__":
     dc2      = dcmotor()
-    Ts = 0.001
+    Ts = 0.0001
     ekf =   dKF(x0 = zeros((3,1)))
     
-    mtime = arange( 0, 0.1, Ts )
+    mtime = arange( 0, 0.01, Ts )
     
     yo = zeros( ( len( mtime ), 1 ) )
     xk = zeros( ( len( mtime ), 3 ) )
@@ -35,13 +35,13 @@ if __name__ == "__main__":
     error = zeros( ( len( mtime ), 3 ) )
     ( A, B, C, D ) = dc2.dss( Ts )
     
-    sinW = sinwave( Ts = Ts, mtime = 0.1, freq = 50, amp = 20 )
+    sinW = sinwave( Ts = Ts, mtime = 0.01, freq = 100, amp = 20 )
     pw = sinW.signal()     
     
-    H   = array([[0, 0, 0],[0, 1, 0],[0, 0, 0]])
+    H   = array([[1, 0, 0],[0, 1, 0],[0, 0, 1]])
     for i in range( len( mtime ) ):    
-        #u = pw[i]    
-        u = array([[1.]])
+        u = pw[i]    
+        #u = array([[1.]])
         y_k, x_k = dc2.dlsim( u, Ts = Ts);
         
         yo[i,:] = y_k
@@ -51,16 +51,13 @@ if __name__ == "__main__":
         z_K = copy(x_k)
         z_K[0] = 0  
         z_K[1] = z_K[1] + random.uniform(-0.5, 0.5) 
+        
         noise[i,:] =  z_K[1]
+        
         x_k_e, PP, err = ekf.update( z_K, u, A, B, H )
         
-        xe[i,:] = x_k_e.conj().T  
-        
-        
-        print "meas"
-        print xk[i,:]
-        print "es"
-        print xe[i,:]
+        xe[i,:] = x_k_e.conj().T       
+       
         
     pylab.plot( xk[:, 1])        
     pylab.plot( xe[:, 1])
