@@ -43,9 +43,9 @@ if __name__ == "__main__":
 	#Clearing the previous position
 	dc2.x0	 = 	None;
 	#Creating and initializing the PID controller
-	pid	 = 	PID( KP = 0.25, KI = 10, KD = 0.0001 )
+	pid	 = 	PID( KP = 0.01, KI = 1.0, KD = 0.0001 )
 	
-	pw	 = 	ones( 100 ) 
+	pw	 = 	10*ones( 1000 ) 
 	y_out = zeros( ( len( pw ), 1 ) )
 	sw = 0;
 	for i in range( len( pw ) ):
@@ -61,7 +61,7 @@ if __name__ == "__main__":
 	
 	
 	#Clearing the previous states
-	dc2.x0	 = 	None;	
+	"""dc2.x0	 = 	None;	
 	
 	sinW = sinwave( Ts = Ts, mtime = 1, freq = 5, amp = 6000 )
 	pw = sinW.signal()	 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
 	pylab.plot( pw )
 	pylab.plot( y_out[:, 0] )
 	pylab.figure( 4 )
-	pylab.plot( u_out[:, 0] )
+	pylab.plot( u_out[:, 0] )"""
 	pylab.show()
 	
 	

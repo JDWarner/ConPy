@@ -63,7 +63,7 @@ class PID:
 		self.__dt = self.__gettime()
 		
 		#Calculate the integral
-		self.__integral		+= 	self.Ki * error * dt
+		self.__integral		= 	self.Ki * (self.__integral+ (error * dt))
 		#Upper limit
 		if(self.__integral > self.I_max):
 			self.__integral = self.I_max

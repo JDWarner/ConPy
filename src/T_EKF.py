@@ -49,23 +49,23 @@ if __name__ == "__main__":
         
         
         z_K = copy(x_k)
-        z_K[0] = 0  
-        z_K[1] = z_K[1] + random.uniform(-0.5, 0.5) 
+        z_K[1] = 0  
+        z_K[0] = z_K[0] + random.uniform(-0.5, 0.5) 
         
-        noise[i,:] =  z_K[1]
+        noise[i,:] =  z_K[0]
         
         x_k_e, PP, err = ekf.update( z_K, u, A, B, H )
         
-        xe[i,:] = x_k_e.conj().T       
-       
+        xe[i,:] = x_k_e.conj().T
         
-    pylab.plot( xk[:, 1])        
-    pylab.plot( xe[:, 1])
+        
+    pylab.plot( xk[:, 0])        
+    pylab.plot( xe[:, 0])
     pylab.plot(noise)
     
     pylab.figure(2)
-    pylab.plot( xk[:, 0])        
-    pylab.plot( xe[:, 0])
+    pylab.plot( xk[:, 1])        
+    pylab.plot( xe[:, 1])
     #pylab.plot( error)
     #pylab.figure(2)
     #pylab.plot( xk[:,1])    

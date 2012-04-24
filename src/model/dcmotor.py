@@ -31,7 +31,7 @@ class dcmotor:
 	"""
 	The model is inaccurate
 	"""
-	def __init__(self, J = 3.2284e-6, b = 3.5077e-6, K_e = 0.0274, K_m = 0.0274, La = 2.75e-6, Ra = 4, Fc = 3.2284e-6 ):
+	def __init__(self, J = 3.2284e-6, b = 3.5077e-6, K_e = 0.0274, K_m = 0.0274, La = 2.75e-6, Ra = 4 ):
 		"""		
 		@summary: Initializing the DC motor's parameters		
 		
@@ -40,8 +40,8 @@ class dcmotor:
 		@param K_e: Speed constant  
 		@param K_m: Torque constant
 		@param La: Motor armature coil inductance
-		@param Ra: Motor armature coil resistance   
-		@param Fc: Coulomb friction   
+		@param Ra: Motor armature coil resistance  
+		 
 		
 		@return: None
 		"""
@@ -50,8 +50,7 @@ class dcmotor:
 		self.K_e=	K_e
 		self.K_m=	K_m
 		self.La	=	La
-		self.Ra	=	Ra
-		self.Fc	=	Fc
+		self.Ra	=	Ra		
 		
 		self.x0 = None
 		
@@ -65,22 +64,22 @@ class dcmotor:
 		x1 - di/dt
 		x3 - do/dt
 		"""
-		self.A = array([						
-						[-self.b/self.J, self.K_m/self.J, 		0.],
-						[-self.K_e/self.La, -self.Ra/self.La,  	0.],
-						[0., 				0.,  				1]
+		self.A = array([
+						[-self.Ra/self.La,	-self.K_e/self.La,  	0.],						
+						[ self.K_m/self.J,	-self.b/self.J,			0.],						
+						[0., 				0.,  					1.]
 						])
-		self.B = array([						
-						[0.],
-						[1./self.La],
+		self.B = array([
+						[1./self.La],						
+						[0.],						
 						[0.]
 						])
-		self.C = array([[1., 0., 0.]])
+		self.C = array([[0., 1., 0.]])
 		self.D = array([[0.]])
 		
 		self.const = array([
-							[0.],
-							[-self.Fc/self.J],
+							[-1/self.J],
+							[0.],							
 							[0.]
 							])
 							
