@@ -9,7 +9,7 @@ __status__ = "Under Development"
 
 import time, sys
 class PID:
-	def __init__(self, KP=2.0, KI=10.0, KD=0.001, I_max=500, I_min=-500, U_max=500, U_min=-500):
+	def __init__(self, KP=2.0, KI=10.0, KD=0.001, I_max=1000, I_min=-1000, U_max=500, U_min=-500):
 		"""
 		@summary: Initializing the PID controller parameters
 		Discrete implementation of the PID controller. If you want a P or PI controller 
