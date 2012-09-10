@@ -28,13 +28,13 @@ class threephase:
 		self.__init_signal()
 		
 	def signal(self, stime = None):
-		if(stime == None):
+		if(not stime == None):
 			self.__init_signal(stime)		
 		return array([ 	self.phasea, self.phaseb, self.phasec ])
 		
 	def __init_signal(self, stime = None):
-		sinw	=	sinvawe(self.amp, self.freq, self.Ts, self.mtime, self.bias, self.phase)
-		if(stime == None):
+		sinw = sinwave(self.amp, self.freq, self.Ts, self.mtime, self.bias, self.phase)
+		if(not stime == None):
 			sinw.stime	=	stime;
 					
 		self.stime	=	sinw.stime;		

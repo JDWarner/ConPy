@@ -37,7 +37,7 @@ if __name__ == "__main__":
 		u = array( [1.] )		
 		yo[i, :] = dc2.dlsim( u, Ts = Ts )[0];
 		
-		
+	print yo
 	pylab.plot( yo[:, 0] )	
 	
 	#Clearing the previous position
