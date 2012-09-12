@@ -18,8 +18,8 @@ if __name__ == "__main__":
     a_a_b_c = zeros((3,  len( atime ) ))
     
     for i in range( len( atime ) ):        
-        alpha_beta = transf.clarke_i0(signal[0][i], signal[1][i], signal[2][i])
-        a_b_c = transf.inv_clarke_i0(alpha_beta[0][0], alpha_beta[1][0], alpha_beta[2][0])
+        alpha_beta = transf.clarke_p_i_i0(signal[0][i], signal[1][i], signal[2][i])
+        a_b_c = transf.inv_clarke_p_i_i0(alpha_beta[0][0], alpha_beta[1][0], alpha_beta[2][0])
         
         a_alpha_beta[0][i] = alpha_beta[0][0] 
         a_alpha_beta[1][i] = alpha_beta[1][0]
@@ -48,8 +48,8 @@ if __name__ == "__main__":
     
     
     for i in range( len( atime ) ):        
-        alpha_beta = transf.clarke(signal[0][i], signal[1][i])
-        a_b_c = transf.inv_clarke(alpha_beta[0][0], alpha_beta[1][0])
+        alpha_beta = transf.clarke_p_i(signal[0][i], signal[1][i])
+        a_b_c = transf.inv_clarke_p_i(alpha_beta[0][0], alpha_beta[1][0])
         
         a_alpha_beta[0][i] = alpha_beta[0][0] 
         a_alpha_beta[1][i] = alpha_beta[1][0]        
@@ -72,10 +72,39 @@ if __name__ == "__main__":
     pylab.subplot(3,1,3, title="Alpha,Beta inverse transformation")
     pylab.plot(a_a_b_c[0])
     pylab.plot(a_a_b_c[1])
+    pylab.plot(a_a_b_c[2])    
+    
+    for i in range( len( atime ) ):        
+        alpha_beta = transf.clarke_m_i(signal[0][i], signal[1][i], signal[2][i])
+        a_b_c = transf.inv_clarke_m_i(alpha_beta[0][0], alpha_beta[1][0], alpha_beta[2][0])
+        
+        a_alpha_beta[0][i] = alpha_beta[0][0] 
+        a_alpha_beta[1][i] = alpha_beta[1][0]        
+        a_alpha_beta[2][i] = alpha_beta[2][0]        
+        
+        a_a_b_c[0][i] = a_b_c[0][0]
+        a_a_b_c[1][i] = a_b_c[1][0]
+        a_a_b_c[2][i] = a_b_c[2][0] 
+    
+    pylab.figure( 3 )
+    pylab.subplot(3,1,1, title="Three phase signal")
+        
+    pylab.plot(signal[0])
+    pylab.plot(signal[1])
+    pylab.plot(signal[2])
+    
+    pylab.subplot(3,1,2, title='Alpha,Beta transformation')
+    pylab.plot(a_alpha_beta[0])
+    pylab.plot(a_alpha_beta[1])    
+    pylab.plot(a_alpha_beta[2])    
+       
+    pylab.subplot(3,1,3, title="Alpha,Beta inverse transformation")
+    pylab.plot(a_a_b_c[0])
+    pylab.plot(a_a_b_c[1])
     pylab.plot(a_a_b_c[2])
     pylab.show()
     
-    pylab.show()
+    
     
     
     

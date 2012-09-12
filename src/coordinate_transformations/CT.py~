@@ -60,7 +60,7 @@ class CT:
         return  dot(T, array([[a],[b],[c]]));
         
     
-    def inv_clarke_m_i(self,alpha, beta, Io):
+    def inv_clarke_m_i(self,alpha, beta):
         T = 3./2.* array([
                               [2./3., 0., 1./2.], 
                               [-1./3.,  1/sqrt(3.), 1./2.], 
