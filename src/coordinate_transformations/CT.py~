@@ -44,12 +44,13 @@ class CT:
     
     def inv_clarke_p_i(self,alpha, beta):
         T = array([
-                    [sqrt(2./3.), 0],                              
-                    [-1./sqrt(6.), 1./sqrt(2.)]
+                    	[sqrt(2./3.), 0],                              
+                    	[-1./sqrt(6.), 1./sqrt(2.)]
+			[-1./sqrt(6.), -1./sqrt(2.)]
                 ])
         
-        a_b = dot(T, array([[alpha],[beta]]))
-        return vstack((a_b, array([-a_b[0][0]-a_b[1][0]])))
+        return dot(T, array([[alpha],[beta]]))
+        #return vstack((a_b, array([-a_b[0][0]-a_b[1][0]])))
         
     def clarke_m_i(self,a,b,c): 
 	T = 2./3.* array([
@@ -60,7 +61,7 @@ class CT:
         return  dot(T, array([[a],[b],[c]]));
         
     
-    def inv_clarke_m_i(self,alpha, beta):
+    def inv_clarke_m_i(self,alpha, beta, Io):
         T = 3./2.* array([
                               [2./3., 0., 1./2.], 
                               [-1./3.,  1/sqrt(3.), 1./2.], 

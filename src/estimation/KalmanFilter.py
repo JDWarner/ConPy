@@ -14,7 +14,7 @@ class dEKF:
 	"""
 	@summary: 	Discrete extended Kalman Filter 
 	"""
-	def __init__( self, x0 , Q = None, R = None, PP = None ):
+	def __init__( self, x0 , PP = None, Q = None, R = None ):
 		self.n = x0.shape[0]
 		
 		#error covariance matrix
@@ -36,13 +36,17 @@ class dEKF:
 		
 		self.xk = x0
 		
-	def update( self, Zk, U, Gk, Ak, Bk, H ):
+		
+	def update_state( self, U, Ak, Bk ):
 		"""
 		Predict the next states
-		"""		
+		"""
 		
 		#Predicted (a priori) state estimate
 		self.xk = 	dot( Ak, self.xk ) + dot( Bk, U );
+		return self.xk
+		
+	def update( self, Zk, U, Gk, Ak, Bk, H ):
 		
 		#Predicted (a priori) estimate covariance
 		self.PP	 = 	dot( dot( Gk, self.PP ), Gk.conj().T ) + self.Q;
@@ -84,7 +88,7 @@ class dKF:
 		
 		self.xk = x0
 		
-	def update(self,  Zk, U, Ak, Bk, H ):
+	def update( self, Zk, U, Ak, Bk, H ):
 		"""
 		Predict the next states
 		"""			

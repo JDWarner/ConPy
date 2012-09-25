@@ -13,7 +13,7 @@ This is a brushed DC motor model.
 A brushed DC motor is an internally commutated electric motor designed to be 
 run from a direct current power source.
 
-We can describe the motor modell with the following modell:
+We can describe the motor model with the following model:
 
 \dot{\i} = - \frac{R_{a}}{L_{a}}i_{a} - \frac{K_{e}}{L_{a}}\omega_{m} + \frac{1}{L_{a}}u
 \dot{\omega_{m}}} = \frac{K_{m}}{J}i_{a} - \frac{K_{b}}{J}\omega_{m} - \frac{F_{c}}{J}T_{l}
@@ -31,7 +31,7 @@ class dcmotor:
 	"""
 	The model is inaccurate
 	"""
-	def __init__(self, J = 3.2284e-6, b = 3.5077e-6, K_e = 0.0274, K_m = 0.0274, La = 2.75e-6, Ra = 4 ):
+	def __init__( self, J = 3.2284e-6, b = 3.5077e-6, K_e = 0.0274, K_m = 0.0274, La = 2.75e-6, Ra = 4 ):
 		"""		
 		@summary: Initializing the DC motor's parameters		
 		
@@ -45,16 +45,16 @@ class dcmotor:
 		
 		@return: None
 		"""
-		self.J	=	J
-		self.b	=	b
-		self.K_e=	K_e
-		self.K_m=	K_m
-		self.La	=	La
-		self.Ra	=	Ra		
+		self.J	 = 	J
+		self.b	 = 	b
+		self.K_e = 	K_e
+		self.K_m = 	K_m
+		self.La	 = 	La
+		self.Ra	 = 	Ra		
 		
 		self.x0 = None
 		
-	def css(self):
+	def css( self ):
 		"""
 		@summary: Calculate the DC motro model
 		
@@ -64,28 +64,28 @@ class dcmotor:
 		x1 - di/dt
 		x3 - do/dt
 		"""
-		self.A = array([
-						[-self.Ra/self.La,	-self.K_e/self.La,  	0.],						
-						[ self.K_m/self.J,	-self.b/self.J,			0.],						
-						[0., 				0.,  					1.]
-						])
-		self.B = array([
-						[1./self.La],						
-						[0.],						
+		self.A = array( [
+						[-self.Ra / self.La, 	 -self.K_e / self.La, 	0.], 						
+						[ self.K_m / self.J, 	 -self.b / self.J, 			0.], 						
+						[0., 				0., 					1.]
+						] )
+		self.B = array( [
+						[1. / self.La], 						
+						[0.], 						
 						[0.]
-						])
-		self.C = array([[0., 1., 0.]])
-		self.D = array([[0.]])
+						] )
+		self.C = array( [[0., 1., 0.]] )
+		self.D = array( [[0.]] )
 		
-		self.const = array([
-							[-1/self.J],
-							[0.],							
+		self.const = array( [
+							[-1 / self.J],
+							[0.], 							
 							[0.]
-							])
+							] )
 							
-		return (self.A, self.B, self.C, self.D)
+		return ( self.A, self.B, self.C, self.D )
 		
-	def dss(self, Ts, method= "ZOH"):
+	def dss( self, Ts, method = "ZOH" ):
 		"""
 		@summary: Convert the continuous model to the discrete model 
 		
@@ -96,9 +96,9 @@ class dcmotor:
 		"""
 		from tools.tools import c2d
 		self.css();
-		return c2d((self.A, self.B, self.C, self.D), Ts, method);
+		return c2d( ( self.A, self.B, self.C, self.D ), Ts, method );
 		
-	def dlsim(self, u, Ts = 0.001, x0 = None):
+	def dlsim( self, u, Ts = 0.001, x0 = None ):
 		"""
 		@summary: Simulate the motor for one input
 		
@@ -110,17 +110,17 @@ class dcmotor:
 		"""
 		if self.x0 is None:
 			if not x0 is None:
-				self.x0	=	x0
+				self.x0	 = 	x0
 			else:
-				self.x0	=	zeros((3,1))
-			(self.Ad, self.Bd, self.Cd, self.Dd)	=	self.dss(Ts)
+				self.x0	 = 	zeros( ( 3, 1 ) )
+			( self.Ad, self.Bd, self.Cd, self.Dd )	 = 	self.dss( Ts )
 			
 			
-		xk_1 = dot(self.Ad, self.x0) + dot(self.Bd, u) #+ self.const*sign(self.x0[0])		
-		y_out = dot(self.Cd, self.x0) + dot(self.Dd, u)
-		self.x0	=	xk_1
+		xk_1 = dot( self.Ad, self.x0 ) + dot( self.Bd, u ) #+ self.const*sign(self.x0[0])		
+		y_out = dot( self.Cd, self.x0 ) + dot( self.Dd, u )
+		self.x0	 = 	xk_1
 		
-		return (y_out, self.x0)
+		return ( y_out, self.x0 )
 			
 		
 			
